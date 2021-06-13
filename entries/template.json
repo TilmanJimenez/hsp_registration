@@ -1,0 +1,15 @@
+{
+	"vorname": "Max",
+	"name": "Mustermann",
+	"strasse": "Musterstraße 42",
+	"ort": "12345 Stadt",
+	"status": "S-TUD",
+	"matnr": "123456",
+	"email": "max@mustermann.de",
+	"telefon": "+49 111 111 11 111",
+	"courses": {
+		"7":{
+			"14": "https://www.buchsys.ahs.musteruni.de/angebote/aktueller_zeitraum/Musterkurs.html"
+		}
+	}
+}
