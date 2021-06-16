@@ -7,7 +7,6 @@ import json
 import os
 from datetime import datetime
 
-
 class Browser:
 	def __init__(self):
 		self.browser = webdriver.Firefox(executable_path='./geckodriver')
@@ -22,8 +21,8 @@ class Browser:
 						self.register(data['courses'][day][hour], data)
 
 	def register(self, url, data):
-		self.browser.get(url)
-		self.browser.find_element_by_xpath('//td[@class="bs_sbuch"]').click()
+		self.browser.get(url[0])
+		self.browser.find_elements_by_xpath('//td[@class="bs_sbuch"]')[url[1]].click()
 
 		#Switch tab
 		handles = self.browser.window_handles
@@ -42,13 +41,18 @@ class Browser:
 		
 		for attr in ['matnr', 'email', 'telefon']:
 			self.browser.find_element_by_xpath('//input[@name="%s"]'%attr).send_keys(data[attr])
-
 		self.browser.find_element_by_xpath('//input[@name="tnbed"]').click()
-		self.browser.find_element_by_xpath('//div[@id="bs_foot"]//input[@class="sub"][@type="submit"]').click()
-		#Hier fehlt noch der letzte click! Max Mustermann kann aber leider keine Sportkarte
-
+		while True:
+			try:
+				self.browser.find_element_by_xpath('//div[@id="bs_foot"]//input[@class="sub"][@type="submit"][@value="weiter zur Buchung"]').click()
+			except NoSuchElementException:
+				break
+		self.wait.until(lambda _: self.browser.find_element_by_xpath('//div[@id="bs_foot"]//input[@class="sub"][@type="submit"][@value="verbindlich buchen"]'))
+		self.browser.find_element_by_xpath('//div[@id="bs_foot"]//input[@class="sub"][@type="submit"][@value="verbindlich buchen"]').click()
+		
 browser = Browser()
 for file in os.listdir('entries'):
+	print (file)
 	with open(os.path.join('entries', file), "rb") as read_file:
 		data = json.load(read_file)
 		browser.run_all(data)

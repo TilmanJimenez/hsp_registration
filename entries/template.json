@@ -9,7 +9,7 @@
 	"telefon": "+49 111 111 11 111",
 	"courses": {
 		"7":{
-			"14": "https://www.buchsys.ahs.musteruni.de/angebote/aktueller_zeitraum/Musterkurs.html"
+			"14": ["https://www.buchsys.ahs.musteruni.de/angebote/aktueller_zeitraum/Musterkurs.html", 0]
 		}
 	}
 }
